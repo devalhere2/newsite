@@ -1,1 +1,5 @@
-<h1>AI Route</h1>
+<script>
+    import Temp from "../../components/Temp.svelte";
+</script>
+
+

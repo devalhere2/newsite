@@ -23,7 +23,8 @@
     .body{
         flex: 1;
         background-color: black;
-
+        position: relative;
     }
+    
       
 </style>

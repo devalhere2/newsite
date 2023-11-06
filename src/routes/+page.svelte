@@ -5,9 +5,6 @@
     const routeName = JSON.stringify($page.route.id)
   
 </script>
-<body>
-    <Mars />
-</body>
-
+<Mars />
 <style>
 </style>
