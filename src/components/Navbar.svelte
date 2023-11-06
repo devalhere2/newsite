@@ -10,7 +10,7 @@
         <h2
             style="margin: 0; padding: 0; color: #27077D ; font-family: monospace;"
         >
-            <a href="./" style="text-decoration: none; color: #27077D;">deval.me</a>
+            <a href="./" style="text-decoration: none; color: #aa00ff;">deval.me</a>
         </h2>
     </div>
     <div class="Navbar_links">
@@ -40,9 +40,9 @@
         align-items: center;
         padding-top: 10px;
         padding-bottom: 5px;
-        border-bottom: 3px solid #27077d;
-        border-radius: 5px;
-    }
+        border-bottom: 3.5px solid #aa00ff;
+        
+        background-color: rgba(0, 0, 0, 0.90)    }
     .Navbar_links {
         display: flex;
         margin-right: 10vw;
@@ -59,11 +59,11 @@
         margin-left: 20px;
         margin-right: 20px;
         font-weight: bold;
-        color: rgba(0, 128, 0, 0.74);
+        color: rgb(0, 210, 105);
         text-decoration: none;
     }
     #vcolour {
-        color: #27077d;
+        color: #aa00ff;
         text-decoration: underline;
     }
 </style>
