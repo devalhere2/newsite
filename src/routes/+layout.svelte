@@ -5,7 +5,7 @@
 
 <div class="mainbody">
     <div class="nav"><Navbar /></div>
-    <div class="body"><slot /></div>
+    <div class="body" ><slot /></div>
     <div class="foo"><Footer /></div>
 </div>
 
@@ -18,9 +18,12 @@
     .mainbody {
         display: flex;
         flex-direction: column;
-        min-height: 100vh;
+        height: 100vh;
     }
     .body{
         flex: 1;
+        background-color: black;
+
     }
+      
 </style>

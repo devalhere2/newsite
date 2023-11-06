@@ -7,11 +7,7 @@
 </script>
 <body>
     <Mars />
-    <h1>Hi</h1>
-    <h1>{routeName}</h1>
-
 </body>
 
 <style>
-    
 </style>
