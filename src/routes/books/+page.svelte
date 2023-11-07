@@ -10,33 +10,61 @@
     </div>
     <div class="bookbody">   
         <div class="container">
-            <div class="item item1">
-               <h1>Hello</h1>
+            <div class="item">
+               <div class="image"><h1>image</h1></div>
+               <div class="title"><p>Title</p></div>
             </div>
-            <div class="item item2">
-                <h1>Hello</h1>
-            </div>
-            <div class="item item1">
-                <h1>Hello</h1>
+            <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
              </div>
-             <div class="item item2">
-                 <h1>Hello</h1>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
              </div>
-             <div class="item item1">
-                <h1>Hello</h1>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
              </div>
-             <div class="item item2">
-                 <h1>Hello</h1>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
              </div>
-             <div class="item item1">
-                <h1>Hello</h1>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
              </div>
-             <div class="item item2">
-                 <h1>Hello</h1>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
+             </div>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
+             </div>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
+             </div>
+             <div class="item">
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
+             </div>
+             <div class="item">
+                <div class="image">
+                    <img src="" alt="">
+                </div>
+                <div class="title"><p>Title</p></div>
              </div>
              
-             
+
         </div>
+    </div>
+    <div class="pages">
+        <div><h1>Back</h1></div>
+        <div style="margin-left: 20px;margin-right: 20px;"><h1>Pages</h1></div>
+        <div><h1>Next</h1></div>
+        
     </div>
 
 </div>
@@ -44,8 +72,8 @@
 
 <style>
     .search {
-        margin-top: 10vh;
-        margin-bottom: 50px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
     .body {
         display: flex;
@@ -56,8 +84,8 @@
     }
     .container {
         display: grid;
-        grid-template-rows: 200px 200px ;
-        grid-template-columns:  16vw 16vw 16vw 16vw 16vw;
+        grid-template-rows: 32vh 32vh ;
+        grid-template-columns:  14vw 14vw 14vw 14vw 14vw 14vw ;
         grid-gap: 24px;
     }
     
@@ -68,9 +96,23 @@
         padding: 0;
         margin: 0;
         color: blue;
+        display: flex;
+        flex-direction: column;
     }
     h1 {
         color: wheat;
     }
-    
+    .pages {
+        display: flex;
+    }
+    .image{
+        border: 2px solid red;
+        height: 100%;
+        margin: 1vw;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
