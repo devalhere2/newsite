@@ -1,6 +1,6 @@
 <div class="body">
     <div class="one">
-        hi
+        Welcome to my Website
     </div>
     <img src="mars.svg" alt="" class="svg" />
 </div>
@@ -14,7 +14,20 @@
         margin: 0;
         height: 100%;
         position: relative;
-        overflow: hidden;
+        font-family: monospace;
+        font-size: 64pt;
+        justify-content: center;
+        align-items: end;
+        display: flex;
+        text-shadow:
+            1px 1px 0 #aa00ff, 
+            1px 2px 0 #aa00ff, 
+            1px 3px 0 #aa00ff,
+            1px 4px 0 #aa00ff,
+            3px 1px 0 rgb(0, 210, 105),
+            3px 2px 0 rgb(0, 210, 105),
+            3px 3px 0 rgb(0, 210, 105),
+            3px 4px 0 rgb(0, 210, 105);
     }
     
     .svg {

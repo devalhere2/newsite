@@ -8,7 +8,7 @@
     <div class="Navbar_logo">
         <img src="./marsf.png" alt="" style="height: 50px;" />
         <h2
-            style="margin: 0; padding: 0; color: #27077D ; font-family: monospace;"
+            style="margin: 0; padding: 0; color: #aa00ff ; font-family: monospace;"
         >
             <a href="./" style="text-decoration: none; color: #aa00ff;">deval.me</a>
         </h2>
@@ -17,19 +17,19 @@
         {#if routeName == "/ai"}
             <a class="links" id="vcolour" href="./ai">AI Models</a>
             <a class="links" href="./filem">File Manipulations</a>
-            <a class="links" href="./resume">Resume</a>
+            <a class="links" href="./books">Books</a>
         {:else if routeName == "/filem"}
             <a class="links" href="./ai">AI Models</a>
             <a class="links" id= "vcolour" href="./filem">File Manipulations</a>
-            <a class="links" href="./resume">Resume</a>
-        {:else if routeName == "/resume"}
+            <a class="links" href="./books">Books</a>
+        {:else if routeName == "/books"}
             <a class="links" href="./ai">AI Models</a>
             <a class="links" href="./filem">File Manipulations</a>
-            <a class="links"  id="vcolour"  href="./resume">Resume</a>
+            <a class="links"  id="vcolour"  href="./books">Books</a>
         {:else}
             <a class="links" href="./ai">AI Models</a>
             <a class="links" href="./filem">File Manipulations</a>
-            <a class="links" href="./resume">Resume</a>
+            <a class="links" href="./books">Books</a>
         {/if}
     </div>
 </div>
