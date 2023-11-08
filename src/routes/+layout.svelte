@@ -14,7 +14,9 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        overflow: hidden;
     }
+
     .mainbody {
         display: flex;
         flex-direction: column;
