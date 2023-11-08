@@ -52,7 +52,7 @@
              </div>
              <div class="item">
                 <div class="image">
-                    <img src="" alt="">
+                    <img src="marsf.png" alt="" width="80%">
                 </div>
                 <div class="title"><p>Title</p></div>
              </div>
@@ -84,7 +84,7 @@
     }
     .container {
         display: grid;
-        grid-template-rows: 32vh 32vh ;
+        grid-template-rows: 30vh 30vh ;
         grid-template-columns:  14vw 14vw 14vw 14vw 14vw 14vw ;
         grid-gap: 24px;
     }
@@ -108,10 +108,13 @@
     .image{
         border: 2px solid red;
         height: 100%;
-        margin: 1vw;
+        margin-top: 1vw;
+        margin-left: 1vw;
+        margin-right: 1vw;
+
         display: flex;
         flex-direction: column;
-        height: 100%;
+       
         justify-content: center;
         align-items: center;
     }

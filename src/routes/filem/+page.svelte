@@ -4,21 +4,24 @@
 <div class="body">
     <div class="container">
         <div class="item item1">
-            <div class="name">
-                <span>
-                    <img
-                        src="/images.png"
-                        alt=""
-                        style="height: 50px; margin-right: 10px;"
-                    />
-                </span>
-                <span>
-                    <h1>Image Compression</h1>
-                </span>
-            </div>
+            <a href="/" class="links">
+                <div class="name">
+                    <span>
+                        <img
+                            src="/images.png"
+                            alt=""
+                            style="height: 50px; margin-right: 10px;"
+                        />
+                    </span>
+                    <span>
+                        <h1>Image Compression</h1>
+                    </span>
+                </div> 
+            </a>
+        
         </div>
         <div class="item item2">
-            <div class="name">
+            <a href="/" class="links"><div class="name">
                 <span>
                     <img
                         src="/pdf.png"
@@ -29,10 +32,11 @@
                 <span>
                     <h1>Combine PDF's</h1>
                 </span>
-            </div>
+            </div></a>
+            
         </div>
         <div class="item item1">
-            <div class="name">
+            <a href="/" class="links"><div class="name">
                 <span>
                     <img
                         src="/multi.png"
@@ -43,10 +47,12 @@
                 <span>
                     <h1>Images ⇆ PDF</h1>
                 </span>
-            </div>
+            </div></a>
+
+            
         </div>
         <div class="item item2">
-            <div class="name">
+            <a href="/" class="links"><div class="name">
                 <span>
                     <img
                         src="/png.png"
@@ -57,7 +63,9 @@
                 <span>
                     <h1>JPG ⇆ PNG</h1>
                 </span>
-            </div>
+            </div></a>
+
+            
         </div>
     </div>
 </div>
@@ -95,5 +103,8 @@
         height: 100%;
         justify-content: center;
         align-items: center;
+    }
+    .links{
+        text-decoration: none;
     }
 </style>
