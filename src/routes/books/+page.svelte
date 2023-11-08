@@ -3,74 +3,100 @@
 
 <div class="body">
     <div class="search">
-        <form id="form"> 
-            <input type="search" id="query" name="q" placeholder="Search...">
+        <form id="form">
+            <input
+                type="search"
+                id="query"
+                name="q"
+                placeholder="Search..."
+                class="searchbar"
+            />
             <button>Search</button>
-          </form>
+        </form>
     </div>
-    <div class="bookbody">   
+    <div class="bookbody">
         <div class="container">
             <div class="item">
-               <div class="image"><h1>image</h1></div>
-               <div class="title"><p>Title</p></div>
+                <div class="image"><h1>image</h1></div>
+                <div class="title"><p>Title</p></div>
             </div>
             <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image"><h1>image</h1></div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             <div class="item">
+            </div>
+            <div class="item">
                 <div class="image">
-                    <img src="marsf.png" alt="" width="80%">
+                    <img src="marsf.png" alt="" width="80%" />
                 </div>
                 <div class="title"><p>Title</p></div>
-             </div>
-             
-
+            </div>
         </div>
     </div>
     <div class="pages">
         <div><h1>Back</h1></div>
         <div style="margin-left: 20px;margin-right: 20px;"><h1>Pages</h1></div>
         <div><h1>Next</h1></div>
-        
     </div>
-
 </div>
 
-
 <style>
+    .searchbar {
+        width: 30vw;
+        background-color: black;
+        border: none;
+        height: 30px;
+        border-radius: 20px;
+        color: aqua;  
+        padding: 12px 20px;
+
+  
+    }
+    ::placeholder {
+        color: white;
+        opacity: 1; /* Firefox */
+        font-weight: bold;
+
+    }
+
+    ::-ms-input-placeholder {
+        /* Edge 12 -18 */
+        color: white;
+        font-weight: bold;
+        padding-left: 10px;
+
+    }
     .search {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -81,14 +107,15 @@
         height: 100%;
         justify-content: top;
         align-items: center;
+        background-color: rgba(55, 55, 55, 0.4);
     }
     .container {
         display: grid;
-        grid-template-rows: 30vh 30vh ;
-        grid-template-columns:  14vw 14vw 14vw 14vw 14vw 14vw ;
+        grid-template-rows: 30vh 30vh;
+        grid-template-columns: 14vw 14vw 14vw 14vw 14vw 14vw;
         grid-gap: 24px;
     }
-    
+
     .item {
         border: 3.5px solid #aa00ff;
         border-radius: 10px;
@@ -105,7 +132,7 @@
     .pages {
         display: flex;
     }
-    .image{
+    .image {
         border: 2px solid red;
         height: 100%;
         margin-top: 1vw;
@@ -114,7 +141,7 @@
 
         display: flex;
         flex-direction: column;
-       
+
         justify-content: center;
         align-items: center;
     }
