@@ -67,9 +67,9 @@
         </div>
     </div>
     <div class="pages">
-        <div><h1>Back</h1></div>
-        <div style="margin-left: 20px;margin-right: 20px;"><h1>Pages</h1></div>
-        <div><h1>Next</h1></div>
+        <div><button class="bn">← Back</button></div>
+        <div><button class="bn">Next →</button></div>
+        
     </div>
 </div>
 
@@ -82,6 +82,20 @@
         border-radius: 20px;
         color: aqua;  
         padding: 12px 20px;
+    }
+    .bn{
+        margin-left: 2vw;
+        margin-right: 2vw; 
+        height: 30px;
+        background-color: black;
+        border: 3px solid rgb(255, 255, 0);
+        border-radius: 25px;
+        width: 100px;
+        color: rgb(255, 255, 0);
+        font-weight: bold;
+        font-size: 10pt;
+        cursor: pointer;
+
     }
     .searchbutton{
         height: 30px;
@@ -153,6 +167,7 @@
     }
     .pages {
         display: flex;
+        margin-top: 2vw;
     }
     .image {
         border: 2px solid red;
