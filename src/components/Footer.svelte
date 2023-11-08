@@ -1,5 +1,5 @@
 
-<p> Made with SvelteKit, FastAPI, Redis & Love.</p>
+<p> Made with SvelteKit, FastAPI, PostgreSQL & Love.</p>
 
 
 <style>
