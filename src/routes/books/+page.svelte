@@ -11,7 +11,9 @@
                 placeholder="Search..."
                 class="searchbar"
             />
-            <button>Search</button>
+            <button class="searchbutton">Search</button>
+            <a href="/upload"><button class="uploadbutton">Upload</button></a>
+            
         </form>
     </div>
     <div class="bookbody">
@@ -80,8 +82,28 @@
         border-radius: 20px;
         color: aqua;  
         padding: 12px 20px;
-
-  
+    }
+    .searchbutton{
+        height: 30px;
+        background-color: black;
+        border: 3px solid aqua;
+        border-radius: 25px;
+        width: 100px;
+        color: aqua;
+        font-weight: bold;
+        font-size: 10pt;
+        cursor: pointer;
+    }
+    .uploadbutton{
+        height: 30px;
+        background-color: black;
+        border: 3px solid rgb(47, 255, 0);
+        border-radius: 25px;
+        width: 100px;
+        color: rgb(47, 255, 0);
+        font-weight: bold;
+        font-size: 10pt;
+        cursor: pointer;
     }
     ::placeholder {
         color: white;
