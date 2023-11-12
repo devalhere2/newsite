@@ -4,7 +4,7 @@
      */
     let selectedFiles = [];
     let n;
-
+    $: imagedata = '';
     /**
      * @type {string | ArrayBuffer | null}
      */
@@ -49,6 +49,7 @@
                     }).then(function (response) {
                         return response.json();
                     });
+                    imagedata = response.yolo;
                    
                 }
             } catch (error) {}
@@ -93,7 +94,7 @@
         </div>
         {#if arrow == true}
             <div class="image">
-              
+              <img src={imagedata} alt="" height="80%" style="overflow: hidden;">
             </div>
         {:else}
             <div />
