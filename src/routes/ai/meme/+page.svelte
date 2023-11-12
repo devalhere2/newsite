@@ -4,32 +4,50 @@
      */
     let selectedFiles = [];
     let n;
-    let filename = '';
+
+    /**
+     * @type {string | ArrayBuffer | null}
+     */
+    let avatar;
+    $: filename = "";
+    $: arrow = false;
     /**
      * @param {any} event
      */
     async function handleFileChange(event) {
         selectedFiles = [...event.target.files];
         filename = selectedFiles[0].name;
+        displayimage();
+    }
+    function displayimage() {
+        let reader = new FileReader();
+        reader.readAsDataURL(selectedFiles[0]);
+        reader.onload = (e) => {
+            // @ts-ignore
+            avatar = e.target.result;
+        };
     }
     async function processFile() {
-        // if (selectedFiles) {
-        //     try {
-        //         const resolvedFiles = await Promise.all(selectedFiles);
-        //         for (let fileIndex in resolvedFiles) {
-        //             const file = resolvedFiles[fileIndex];
+        if (filename.length > 0) {
+            try {
+                const resolvedFiles = await Promise.all(selectedFiles);
+                for (let fileIndex in resolvedFiles) {
+                    const file = resolvedFiles[fileIndex];
 
-        //             const formData = new FormData();
-        //             formData.append("file", file);
-        //             const response = await fetch("http://127.0.0.1:8000/file", {
-        //                 method: "POST",
-        //                 body: formData,
-        //             });
-        //         }
-        //         selectedFiles = [];
-        //     } catch (error) {}
-        // }
-        console.log('clickerd')
+                    const formData = new FormData();
+                    formData.append("file", file);
+                    const response = await fetch("http://127.0.0.1:8000/file", {
+                        method: "POST",
+                        body: formData,
+                    });
+                }
+            } catch (error) {}
+        }
+        selectedFiles = [];
+        filename = "";
+        arrow = true;
+
+        console.log("clickerd");
     }
 </script>
 
@@ -47,15 +65,23 @@
     {#if filename.length > 0}
         <div class="filename">{filename}</div>
     {:else}
-        <div class="filename"></div>
+        <div class="filename" />
     {/if}
 
     <div class="display">
         <div class="image">
-            <img src="/mars.svg" alt="" height="100%" width="100%"/>
+            <img src={avatar} alt="" height="100%" style="overflow: hidden;" />
         </div>
         <div class="process">
-            <button class='pbutton'on:click={processFile}> Press me </button>
+            {#if filename.length > 0}
+                <button class="pbutton" on:click={processFile}>
+                    Press me
+                </button>
+            {:else if filename.length == 0 && arrow == true}
+                <img src="/arrow.png" alt="" width="100%" />
+            {:else}
+                <div />
+            {/if}
         </div>
         <div class="result">result</div>
     </div>
@@ -71,7 +97,7 @@
         font-weight: bolder;
         cursor: pointer;
     }
-    .pbutton{
+    .pbutton {
         color: #00ff3c;
         border: #00ff3c 3px solid;
         border-radius: 50px;
@@ -118,7 +144,6 @@
         display: flex;
     }
     .process {
-        
         width: 20vw;
         height: 100%;
         justify-content: center;
