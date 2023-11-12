@@ -15,7 +15,7 @@
     let finalimage;
     $: filename = "";
     $: arrow = false;
-
+   
     /**
      * @param {any} event
      */
@@ -49,6 +49,7 @@
                     }).then(function (response) {
                         return response.json();
                     });
+                   
                 }
             } catch (error) {}
         }
@@ -92,12 +93,7 @@
         </div>
         {#if arrow == true}
             <div class="image">
-                <img
-                    src={finalimage}
-                    alt=""
-                    height="80%"
-                    style="overflow: hidden;"
-                />
+              
             </div>
         {:else}
             <div />
