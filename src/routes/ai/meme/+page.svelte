@@ -11,12 +11,15 @@
     let avatar;
     $: filename = "";
     $: arrow = false;
+    $: meme = 0;
+    $: notmeme = 0;
     /**
      * @param {any} event
      */
     async function handleFileChange(event) {
         selectedFiles = [...event.target.files];
         filename = selectedFiles[0].name;
+        arrow = false;
         displayimage();
     }
     function displayimage() {
@@ -36,18 +39,21 @@
 
                     const formData = new FormData();
                     formData.append("file", file);
-                    const response = await fetch("http://127.0.0.1:8000/file", {
+                    const response = await fetch("http://127.0.0.1:8000/meme", {
                         method: "POST",
                         body: formData,
+                    }).then(function (response) {
+                        return response.json();
                     });
+                    meme = response.res[0][0];
+                    notmeme = response.res[0][1];
+                    
                 }
             } catch (error) {}
         }
         selectedFiles = [];
-        filename = "";
-        arrow = true;
 
-        console.log("clickerd");
+        arrow = true;
     }
 </script>
 
@@ -65,7 +71,7 @@
     {#if filename.length > 0}
         <div class="filename">{filename}</div>
     {:else}
-        <div class="filename" />
+        <div />
     {/if}
 
     <div class="display">
@@ -73,11 +79,11 @@
             <img src={avatar} alt="" height="100%" style="overflow: hidden;" />
         </div>
         <div class="process">
-            {#if filename.length > 0}
+            {#if filename.length > 0 && arrow == false}
                 <button class="pbutton" on:click={processFile}>
                     Press me
                 </button>
-            {:else if filename.length == 0 && arrow == true}
+            {:else if arrow == true}
                 <img src="/arrow.png" alt="" width="100%" />
             {:else}
                 <div />
@@ -136,7 +142,6 @@
         flex: 1;
     }
     .image {
-        background-color: rgb(0, 255, 38);
         width: 40vw;
         height: 100%;
         justify-content: center;
@@ -151,7 +156,6 @@
         display: flex;
     }
     .result {
-        background-color: rgb(0, 255, 38);
         width: 40vw;
         height: 100%;
         justify-content: center;
