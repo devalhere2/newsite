@@ -4,31 +4,32 @@
      */
     let selectedFiles = [];
     let n;
-    /**
-     * @param {any} event
-     */
-    function handlefile(event) {
-        console.log(event);
-    }
+    let filename = '';
     /**
      * @param {any} event
      */
     async function handleFileChange(event) {
         selectedFiles = [...event.target.files];
-        try {
-            const resolvedFiles = await Promise.all(selectedFiles);
-            for (let fileIndex in resolvedFiles) {
-                const file = resolvedFiles[fileIndex];
+        filename = selectedFiles[0].name;
+    }
+    async function processFile() {
+        // if (selectedFiles) {
+        //     try {
+        //         const resolvedFiles = await Promise.all(selectedFiles);
+        //         for (let fileIndex in resolvedFiles) {
+        //             const file = resolvedFiles[fileIndex];
 
-                const formData = new FormData();
-                formData.append("file", file);
-                const response = await fetch("http://127.0.0.1:8000/file", {
-                    method: "POST",
-                    body: formData,
-                });
-            }
-            selectedFiles = [];
-        } catch (error) {}
+        //             const formData = new FormData();
+        //             formData.append("file", file);
+        //             const response = await fetch("http://127.0.0.1:8000/file", {
+        //                 method: "POST",
+        //                 body: formData,
+        //             });
+        //         }
+        //         selectedFiles = [];
+        //     } catch (error) {}
+        // }
+        console.log('clickerd')
     }
 </script>
 
@@ -38,25 +39,23 @@
         <input
             type="file"
             id="file-upload"
-            class="custom-input"
             style="display: none;"
-            accept=".jpg, .jpeg, .png"
+            accept=".jpg, .jpeg"
             on:change={handleFileChange}
         />
     </div>
-    <div class="filename">filename</div>
+    {#if filename.length > 0}
+        <div class="filename">{filename}</div>
+    {:else}
+        <div class="filename"></div>
+    {/if}
+
     <div class="display">
         <div class="image">
-            <img src="/mars.svg" alt="" style="height: 100%" />
+            <img src="/mars.svg" alt="" height="100%" width="100%"/>
         </div>
         <div class="process">
-            <button
-                on:click={() => {
-                    console.log("Hello");
-                }}
-            >
-                Press me
-            </button>
+            <button class='pbutton'on:click={processFile}> Press me </button>
         </div>
         <div class="result">result</div>
     </div>
@@ -71,6 +70,16 @@
         font-size: 150%;
         font-weight: bolder;
         cursor: pointer;
+    }
+    .pbutton{
+        color: #00ff3c;
+        border: #00ff3c 3px solid;
+        border-radius: 50px;
+        padding: 1.5vh;
+        font-size: 150%;
+        font-weight: bolder;
+        cursor: pointer;
+        background-color: rgba(55, 55, 55, 0.4);
     }
     .body {
         height: 100%;
@@ -98,7 +107,6 @@
     }
     .display {
         display: flex;
-        background-color: aquamarine;
         flex: 1;
     }
     .image {
@@ -110,7 +118,7 @@
         display: flex;
     }
     .process {
-        background-color: rgb(255, 136, 0);
+        
         width: 20vw;
         height: 100%;
         justify-content: center;
