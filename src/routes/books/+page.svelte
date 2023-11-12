@@ -11,7 +11,7 @@
                 placeholder="Search..."
                 class="searchbar"
             />
-            <button class="searchbutton">Search</button>
+            <button on:click|preventDefault = {()=> {}}  class ="searchbutton">Search</button>
             <a href="/upload"><button class="uploadbutton">Upload</button></a>
             
         </form>

@@ -4,24 +4,31 @@
 <div class="body">
     <div class="container">
         <div class="item item1">
-            <div class="name">
-                <span>
-                    <img src="/meme.png" alt="" style="height: 50px; margin-right: 10px;"/>
-                </span>
-                <span>
-                    <h1>Meme Detector</h1>
-                </span>
-            </div>
+            <a href="/ai/meme" class="links">
+                <div class="name">
+                    <span>
+                        <img src="/meme.png" alt="" style="height: 50px; margin-right: 10px;"/>
+                    </span>
+                    <span>
+                        <h1>Meme Detector</h1>
+                    </span>
+                </div>
+            </a>
+            
         </div>
         <div class="item item2">
-            <div class="name">
-                <span>
-                    <img src="/yolo.png" alt="" style="height: 40px; margin-right: 10px;"/>
-                </span>
-                <span>
-                    <h1>YOLO Model</h1>
-                </span>
-            </div>
+            <a href="/ai/yolo" class="links">
+
+                <div class="name">
+                    <span>
+                        <img src="/yolo.png" alt="" style="height: 40px; margin-right: 10px;"/>
+                    </span>
+                    <span>
+                        <h1>YOLO Model</h1>
+                    </span>
+                </div>
+            </a>
+            
         </div>
     </div>
 </div>
@@ -59,5 +66,8 @@
         height: 100%;
         justify-content: center;
         align-items: center;
+    }
+    .links{
+        text-decoration: none;
     }
 </style>
