@@ -1,8 +1,35 @@
 <script>
-    
-    function handleClick(e) {
-		alert("I've been clicked!!!")
-	}
+    /**
+     * @type {any[]}
+     */
+    let selectedFiles = [];
+    let n;
+    /**
+     * @param {any} event
+     */
+    function handlefile(event) {
+        console.log(event);
+    }
+    /**
+     * @param {any} event
+     */
+    async function handleFileChange(event) {
+        selectedFiles = [...event.target.files];
+        try {
+            const resolvedFiles = await Promise.all(selectedFiles);
+            for (let fileIndex in resolvedFiles) {
+                const file = resolvedFiles[fileIndex];
+
+                const formData = new FormData();
+                formData.append("file", file);
+                const response = await fetch("http://127.0.0.1:8000/file", {
+                    method: "POST",
+                    body: formData,
+                });
+            }
+            selectedFiles = [];
+        } catch (error) {}
+    }
 </script>
 
 <div class="body">
@@ -23,10 +50,13 @@
             <img src="/mars.svg" alt="" style="height: 100%" />
         </div>
         <div class="process">
-            <button on:click={handleClick}>
+            <button
+                on:click={() => {
+                    console.log("Hello");
+                }}
+            >
                 Press me
-              </button>
-            
+            </button>
         </div>
         <div class="result">result</div>
     </div>
