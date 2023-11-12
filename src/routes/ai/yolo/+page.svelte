@@ -8,7 +8,7 @@
     /**
      * @type {string | ArrayBuffer | null}
      */
-    let avatar;
+    let avatar = null;
     /**
      * @type {any}
      */
