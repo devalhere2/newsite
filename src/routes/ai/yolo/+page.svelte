@@ -1,6 +1,4 @@
 <script>
-// @ts-nocheck
-
     /**
      * @type {any[]}
      */
@@ -11,10 +9,13 @@
      * @type {string | ArrayBuffer | null}
      */
     let avatar;
+    /**
+     * @type {any}
+     */
+    let finalimage;
     $: filename = "";
     $: arrow = false;
-    $: meme = 0;
-    $: notmeme = 0;
+
     /**
      * @param {any} event
      */
@@ -22,11 +23,12 @@
         selectedFiles = [...event.target.files];
         filename = selectedFiles[0].name;
         arrow = false;
-        displayimage();
+        displayimage(selectedFiles[0]);
     }
-    function displayimage() {
+    // @ts-ignore
+    function displayimage(img) {
         let reader = new FileReader();
-        reader.readAsDataURL(selectedFiles[0]);
+        reader.readAsDataURL(img);
         reader.onload = (e) => {
             // @ts-ignore
             avatar = e.target.result;
@@ -41,14 +43,12 @@
 
                     const formData = new FormData();
                     formData.append("file", file);
-                    const response = await fetch("http://127.0.0.1:8000/meme", {
+                    const response = await fetch("http://127.0.0.1:8000/yolo", {
                         method: "POST",
                         body: formData,
                     }).then(function (response) {
                         return response.json();
                     });
-                    meme = response.res[0][0];
-                    notmeme = response.res[0][1];
                 }
             } catch (error) {}
         }
@@ -91,17 +91,16 @@
             {/if}
         </div>
         {#if arrow == true}
-            <div class="result">
-                {#if meme > notmeme}
-                    <h1>This Image is a Meme with a Confidence of {meme.toFixed(3)}</h1>
-                {:else}
-                    <h1>
-                        This Image is a Not a Meme with a Confidence of {notmeme.toFixed(3)}
-                    </h1>
-                {/if}
+            <div class="image">
+                <img
+                    src={finalimage}
+                    alt=""
+                    height="80%"
+                    style="overflow: hidden;"
+                />
             </div>
         {:else}
-            <div class="result" />
+            <div />
         {/if}
     </div>
 </div>
@@ -167,16 +166,5 @@
         justify-content: center;
         align-items: center;
         display: flex;
-    }
-    .result {
-        width: 40vw;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-    }
-    h1{
-        color: rgb(156, 50, 255);
-        font-style: italic;
     }
 </style>
