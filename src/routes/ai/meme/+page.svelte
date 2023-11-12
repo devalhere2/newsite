@@ -47,7 +47,6 @@
                     });
                     meme = response.res[0][0];
                     notmeme = response.res[0][1];
-                    
                 }
             } catch (error) {}
         }
@@ -64,7 +63,7 @@
             type="file"
             id="file-upload"
             style="display: none;"
-            accept=".jpg, .jpeg"
+            accept=".jpg, .jpeg, .png"
             on:change={handleFileChange}
         />
     </div>
@@ -76,12 +75,12 @@
 
     <div class="display">
         <div class="image">
-            <img src={avatar} alt="" height="100%" style="overflow: hidden;" />
+            <img src={avatar} alt="" height="80%" style="overflow: hidden;" />
         </div>
         <div class="process">
             {#if filename.length > 0 && arrow == false}
                 <button class="pbutton" on:click={processFile}>
-                    Press me
+                    Process
                 </button>
             {:else if arrow == true}
                 <img src="/arrow.png" alt="" width="100%" />
@@ -89,7 +88,19 @@
                 <div />
             {/if}
         </div>
-        <div class="result">result</div>
+        {#if arrow == true}
+            <div class="result">
+                {#if meme > notmeme}
+                    <h1>This Image is a Meme with a Confidence of {meme.toFixed(3)}</h1>
+                {:else}
+                    <h1>
+                        This Image is a Not a Meme with a Confidence of {notmeme.toFixed(3)}
+                    </h1>
+                {/if}
+            </div>
+        {:else}
+            <div class="result" />
+        {/if}
     </div>
 </div>
 
@@ -161,5 +172,9 @@
         justify-content: center;
         align-items: center;
         display: flex;
+    }
+    h1{
+        color: rgb(156, 50, 255);
+        font-style: italic;
     }
 </style>
