@@ -36,7 +36,7 @@
             
         </div>
         <div class="item item1">
-            <a href="/filem/i2p" class="links"><div class="name">
+            <a href="/filem/ip" class="links"><div class="name">
                 <span>
                     <img
                         src="/multi.png"
@@ -52,7 +52,7 @@
             
         </div>
         <div class="item item2">
-            <a href="/filem/j2p" class="links"><div class="name">
+            <a href="/filem/jp" class="links"><div class="name">
                 <span>
                     <img
                         src="/png.png"

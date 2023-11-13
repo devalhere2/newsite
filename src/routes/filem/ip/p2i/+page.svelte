@@ -1,0 +1,139 @@
+<script>
+    // @ts-nocheck
+    let selectedFiles = [];
+    $: filename = "";
+    $: filesize = 0;
+    $: filesize_str = "";
+
+    async function handleFileChange(event) {
+        selectedFiles = [...event.target.files].filter((file) => {
+            const fileSizeInMB = file.size / (1024 * 1024);
+            if (fileSizeInMB > 1) {
+                alert("Please select a file less than 1MB");
+                return false;
+            }
+            return true;
+        });
+        if (selectedFiles.length > 0) {
+            filename = selectedFiles[0].name;
+            filesize = selectedFiles[0].size;
+            filesize = filesize / 1000;
+            filesize_str = filesize.toFixed(1) + " KB";
+        }
+        event.target.value = null;
+    }
+    async function processFile() {
+        if (filename.length > 0) {
+            try {
+                const resolvedFiles = await Promise.all(selectedFiles);
+                for (let fileIndex in resolvedFiles) {
+                    const file = resolvedFiles[fileIndex];
+
+                    const formData = new FormData();
+                    formData.append("file", file);
+
+                    const response = await fetch(
+                        `http://127.0.0.1:8000/pdf_to_images`,
+                        {
+                            method: "POST",
+                            body: formData,
+                        }
+                    );
+                    if (response.ok) {
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        let a = document.createElement("a");
+                        a.href = url;
+                        a.download = `${filename.split(".")[0]}-split.zip`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    } else {
+                        console.error("Upload failed");
+                    }
+                }
+            } catch (error) {}
+        }
+        selectedFiles = [];
+        filename = "";
+        filesize_str = "";
+    }
+</script>
+
+<div class="body">
+    <div class="upload">
+        <label for="file-upload" class="select-files">Select Files</label>
+        <input
+            type="file"
+            id="file-upload"
+            style="display: none;"
+            accept=".pdf,"
+            on:change={handleFileChange}
+        />
+    </div>
+    {#if filename.length > 0}
+        <div class="filename">
+            <div
+                style="flex: 1; padding-top: 10vh; font-style: italic; font-size: 16pt;"
+            >
+                File Name: {filename} , Size: {filesize_str}
+            </div>
+        </div>
+        <button class="pbutton" on:click={processFile}> Process </button>
+    {:else}
+        <div />
+    {/if}
+</div>
+
+<style>
+    .body {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(55, 55, 55, 0.4);
+        font-family: monospace;
+        flex-direction: column;
+    }
+    .upload {
+        height: 10vh;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+    .select-files {
+        color: #00ff3c;
+        border: #00ff3c 3px solid;
+        border-radius: 50px;
+        padding: 1.5vh;
+        font-size: 150%;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+    .pbutton {
+        color: #ffffff;
+        border: #ffffff 3px solid;
+        border-radius: 50px;
+        padding: 1.5vh;
+        font-size: 150%;
+        font-family: monospace;
+        font-weight: bolder;
+        cursor: pointer;
+        background-color: rgba(55, 55, 55, 0.4);
+        margin-top: 2vh;
+    }
+    .filename {
+        color: #00ff3c;
+        font-size: 12pt;
+        width: 60%;
+
+        height: 30vh;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border: #00ff3c 3px solid;
+        border-radius: 25px;
+        flex-direction: column;
+    }
+</style>
