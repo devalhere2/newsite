@@ -4,7 +4,7 @@
 <div class="body">
     <div class="container">
         <div class="item item1">
-            <a href="/" class="links">
+            <a href="/filem/ci" class="links">
                 <div class="name">
                     <span>
                         <img
@@ -21,7 +21,7 @@
         
         </div>
         <div class="item item2">
-            <a href="/" class="links"><div class="name">
+            <a href="/filem/cp" class="links"><div class="name">
                 <span>
                     <img
                         src="/pdf.png"
@@ -36,7 +36,7 @@
             
         </div>
         <div class="item item1">
-            <a href="/" class="links"><div class="name">
+            <a href="/filem/i2p" class="links"><div class="name">
                 <span>
                     <img
                         src="/multi.png"
@@ -52,7 +52,7 @@
             
         </div>
         <div class="item item2">
-            <a href="/" class="links"><div class="name">
+            <a href="/filem/j2p" class="links"><div class="name">
                 <span>
                     <img
                         src="/png.png"

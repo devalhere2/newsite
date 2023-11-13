@@ -117,11 +117,12 @@
         cursor: pointer;
     }
     .pbutton {
-        color: #00ff3c;
-        border: #00ff3c 3px solid;
+        color: #ffffff;
+        border: #ffffff 3px solid;
         border-radius: 50px;
         padding: 1.5vh;
         font-size: 150%;
+        font-family: monospace;
         font-weight: bolder;
         cursor: pointer;
         background-color: rgba(55, 55, 55, 0.4);
