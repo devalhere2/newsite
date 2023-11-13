@@ -1,31 +1,44 @@
 <script>
-
+//ts-nocheck
     /**
      * @type {any[]}
      */
-     let selectedFiles = [];
-    let n;
-    $: finalimage = '';
+    let selectedFiles = [];
+    
     /**
      * @type {string | ArrayBuffer | null}
      */
-    let avatar;
-    let sliderValue = 75; 
-   /**
+   
+    /**
      * @type {string | any[]}
      */
-    $: filename = [];
-    $: filesize = 0;
-    $: filesize_str = '';
+    $: filenames_list = [];
+    
+    $: filesize_str = "";
     /**
      * @param {any} event
      */
     async function handleFileChange(event) {
-        selectedFiles = [...event.target.files];
-        filename = selectedFiles.map(file => file.name)
+        selectedFiles = [...event.target.files].filter(file => file.type === 'application/pdf' && file.size <= 20000000);
+        filenames_list = selectedFiles.map((file) => file.name);
+        event.target.value = null;
     }
+    function moveUp(index) {
+        if (index > 0) {
+            [selectedFiles[index - 1], selectedFiles[index]] = [selectedFiles[index], selectedFiles[index - 1]];
+            [filenames_list[index - 1], filenames_list[index]] = [filenames_list[index], filenames_list[index - 1]];
+        }
+    }
+
+    function moveDown(index) {
+        if (index < selectedFiles.length - 1) {
+            [selectedFiles[index + 1], selectedFiles[index]] = [selectedFiles[index], selectedFiles[index + 1]];
+            [filenames_list[index + 1], filenames_list[index]] = [filenames_list[index], filenames_list[index + 1]];
+        }
+    }
+
     async function processFile() {
-        if (filename.length > 0) {
+        if (filenames_list.length > 0) {
             try {
                 const resolvedFiles = await Promise.all(selectedFiles);
                 for (let fileIndex in resolvedFiles) {
@@ -33,18 +46,20 @@
 
                     const formData = new FormData();
                     formData.append("file", file);
-                    
-                    const response = await fetch(`http://127.0.0.1:8000/combine_pdf`, {
-                        method: "POST",
-                        body: formData,
 
-                    }).then(function (response) {
+                    const response = await fetch(
+                        `http://127.0.0.1:8000/combine_pdf`,
+                        {
+                            method: "POST",
+                            body: formData,
+                        }
+                    ).then(function (response) {
                         return response.json();
                     });
-                    finalimage = response.image;
+                    
                     // let a = document.createElement('a');
                     // a.href = finalimage;
-                    // a.download = `${filename.split('.')[0]}-compressed.jpg`; 
+                    // a.download = `${filename.split('.')[0]}-compressed.jpg`;
                     // document.body.appendChild(a);
                     // a.click();
                     // document.body.removeChild(a);
@@ -52,8 +67,8 @@
             } catch (error) {}
         }
         selectedFiles = [];
-        filename = '';
-        filesize_str = '';
+        filenames_list = "";
+        filesize_str = "";
     }
 </script>
 
@@ -64,27 +79,26 @@
             type="file"
             id="file-upload"
             style="display: none;"
-            accept=".pdf"
+            accept="application/pdf"
             multiple
             on:change={handleFileChange}
         />
     </div>
-    {#if filename.length > 0}
-        <div class="filename">
-            <div style="flex: 1; padding-top: 4vh; font-style: italic; font-size: 16pt;">File Name: {filename} , Size: {filesize_str}</div>
-            <div class="list">
-               
+    <div class="filenames">
+        {#each filenames_list as file, index}
+            <div class="file">
+                <div class="name">{file}</div>
+                <div class="seq">
+                    <button class="seqb"  on:click={() => moveUp(index)}>+</button>
+                    <div class="seqn">{index + 1}</div>
+
+                    <button  class="seqb"  on:click={() => moveDown(index)}>-</button>
+                  
+                </div>
             </div>
-            
-            
-            
-        </div>
-        <button class="pbutton" on:click={processFile}>
-            Process
-        </button>
-    {:else}
-        <div />
-    {/if}
+        {/each}
+    </div>
+    <button class="pbutton" on:click={processFile}> Process </button>
 </div>
 
 <style>
@@ -93,9 +107,46 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgba(55, 55, 55, 0.4);;
+        background-color: rgba(55, 55, 55, 0.4);
         font-family: monospace;
         flex-direction: column;
+    }
+    .file {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 96%;
+        padding: 1vh;
+        margin: 1vh;
+        border: #bf00ff 3px solid;
+        border-radius: 25px;
+    }
+    .name {
+        width: 84%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+    .seq {
+        width: 16%;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-left: #00ff3c 3px solid;
+    }
+    .seqn {
+        margin: 0 10px;
+    }
+    .seqb {
+        background-color: rgba(55, 55, 55, 0.4);
+        border: #00ff3c 3px solid;
+        border-radius: 25px;
+        color: #00ff3c;
+        width: 50px;
+        height: 30px;
+        cursor: pointer;
     }
     .upload {
         height: 10vh;
@@ -124,22 +175,34 @@
         background-color: rgba(55, 55, 55, 0.4);
         margin-top: 2vh;
     }
-    .filename {
+    .filenames {
         color: #00ff3c;
         font-size: 12pt;
         width: 70%;
         height: 60vh;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start; 
+        align-items: flex-start;
         display: flex;
-        border: #00ff3c 3px solid; 
-        border-radius: 25px; 
+        border: #00ff3c 3px solid;
+        border-radius: 25px;
         flex-direction: column;
+        overflow: auto;
     }
-    .list {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+    .filenames::-webkit-scrollbar {
+        width: 10px; /* width of the entire scrollbar */
+    }
+
+    .filenames::-webkit-scrollbar-track {
+        background: #ff000006;
+        border-radius: 5px; /* color of the tracking area */
+    }
+
+    .filenames::-webkit-scrollbar-thumb {
+        background: #aa2ded;
+        border-radius: 5px; /* color of the scroll thumb */
+    }
+
+    .filenames::-webkit-scrollbar-thumb:hover {
+        background: #555; /* color of the scroll thumb when hovering */
     }
 </style>

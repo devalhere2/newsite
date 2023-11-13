@@ -26,7 +26,9 @@
         selectedFiles = [...event.target.files];
         filename = selectedFiles[0].name;
         arrow = false;
+        event.target.value = null;
         displayimage(selectedFiles[0]);
+
     }
     // @ts-ignore
     function displayimage(img) {
@@ -82,7 +84,7 @@
 
     <div class="display">
         <div class="image">
-            <img src={avatar} alt="" height="80%" style="overflow: hidden;" />
+            <img src={avatar} alt="" height="450px" style="overflow: hidden;" />
         </div>
         <div class="process">
             {#if filename.length > 0 && arrow == false}
@@ -97,7 +99,7 @@
         </div>
         {#if arrow == true}
             <div class="image">
-              <img src={imagedata} alt="" height="80%" style="overflow: hidden;">
+              <img src={imagedata} alt="" height="450px" style="overflow: hidden;">
             </div>
         {:else}
             <div />

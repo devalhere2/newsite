@@ -22,6 +22,7 @@
         selectedFiles = [...event.target.files];
         filename = selectedFiles[0].name;
         arrow = false;
+        event.target.value = null;
         displayimage();
     }
     function displayimage() {
@@ -77,7 +78,7 @@
 
     <div class="display">
         <div class="image">
-            <img src={avatar} alt="" height="80%" style="overflow: hidden;" />
+            <img src={avatar} alt="" height="450px" style="overflow: hidden;" />
         </div>
         <div class="process">
             {#if filename.length > 0 && arrow == false}

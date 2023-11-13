@@ -16,6 +16,7 @@
         filesize = selectedFiles[0].size;
         filesize = filesize / 1000;
         filesize_str = filesize.toFixed(1) + " KB";
+        event.target.value = null;
     }
     async function processFile() {
         if (filename.length > 0) {
