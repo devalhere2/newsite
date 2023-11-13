@@ -1,10 +1,13 @@
 <script>
+// @ts-nocheck
+
     /**
      * @type {any[]}
      */
     let selectedFiles = [];
     let n;
     $: imagedata = '';
+    
     /**
      * @type {string | ArrayBuffer | null}
      */
