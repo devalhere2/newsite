@@ -1,74 +1,96 @@
 <script>
-//ts-nocheck
+// @ts-nocheck
+
+
     /**
      * @type {any[]}
      */
     let selectedFiles = [];
-    
+
     /**
      * @type {string | ArrayBuffer | null}
      */
-   
+
     /**
      * @type {string | any[]}
      */
     $: filenames_list = [];
-    
+    $: isLoading = false;
+
     $: filesize_str = "";
     /**
      * @param {any} event
      */
     async function handleFileChange(event) {
-        selectedFiles = [...event.target.files].filter(file => file.type === 'application/pdf' && file.size <= 20000000);
+        selectedFiles = [...event.target.files].filter(
+            (file) => file.type === "application/pdf" && file.size <= 20000000
+        );
         filenames_list = selectedFiles.map((file) => file.name);
         event.target.value = null;
     }
     function moveUp(index) {
         if (index > 0) {
-            [selectedFiles[index - 1], selectedFiles[index]] = [selectedFiles[index], selectedFiles[index - 1]];
-            [filenames_list[index - 1], filenames_list[index]] = [filenames_list[index], filenames_list[index - 1]];
+            [selectedFiles[index - 1], selectedFiles[index]] = [
+                selectedFiles[index],
+                selectedFiles[index - 1],
+            ];
+            [filenames_list[index - 1], filenames_list[index]] = [
+                filenames_list[index],
+                filenames_list[index - 1],
+            ];
         }
     }
 
     function moveDown(index) {
         if (index < selectedFiles.length - 1) {
-            [selectedFiles[index + 1], selectedFiles[index]] = [selectedFiles[index], selectedFiles[index + 1]];
-            [filenames_list[index + 1], filenames_list[index]] = [filenames_list[index], filenames_list[index + 1]];
+            [selectedFiles[index + 1], selectedFiles[index]] = [
+                selectedFiles[index],
+                selectedFiles[index + 1],
+            ];
+            [filenames_list[index + 1], filenames_list[index]] = [
+                filenames_list[index],
+                filenames_list[index + 1],
+            ];
         }
     }
 
     async function processFile() {
         if (filenames_list.length > 0) {
+            isLoading = true;
             try {
-                const resolvedFiles = await Promise.all(selectedFiles);
-                for (let fileIndex in resolvedFiles) {
-                    const file = resolvedFiles[fileIndex];
+                const formData = new FormData();
+                selectedFiles.forEach((file, index) => {
+                    formData.append("files", file);
+                });
 
-                    const formData = new FormData();
-                    formData.append("file", file);
+                const response = await fetch(
+                    `http://127.0.0.1:8000/combine_pdf`,
+                    {
+                        method: "POST",
+                        body: formData,
+                    }
+                );
 
-                    const response = await fetch(
-                        `http://127.0.0.1:8000/combine_pdf`,
-                        {
-                            method: "POST",
-                            body: formData,
-                        }
-                    ).then(function (response) {
-                        return response.json();
-                    });
-                    
-                    // let a = document.createElement('a');
-                    // a.href = finalimage;
-                    // a.download = `${filename.split('.')[0]}-compressed.jpg`;
-                    // document.body.appendChild(a);
-                    // a.click();
-                    // document.body.removeChild(a);
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = "combined.pdf";
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                } else {
+                    console.error("Upload failed");
                 }
-            } catch (error) {}
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
         selectedFiles = [];
         filenames_list = "";
         filesize_str = "";
+        isLoading = false;
     }
 </script>
 
@@ -84,21 +106,30 @@
             on:change={handleFileChange}
         />
     </div>
-    <div class="filenames">
-        {#each filenames_list as file, index}
-            <div class="file">
-                <div class="name">{file}</div>
-                <div class="seq">
-                    <button class="seqb"  on:click={() => moveUp(index)}>+</button>
-                    <div class="seqn">{index + 1}</div>
+    {#if isLoading}
+        <div class="filenames">
+            <h1 class="processing">Processing Files ...</h1>
+        </div>
+    {:else}
+        <div class="filenames">
+            {#each filenames_list as file, index}
+                <div class="file">
+                    <div class="name">{file}</div>
+                    <div class="seq">
+                        <button class="seqb" on:click={() => moveUp(index)}
+                            >+</button
+                        >
+                        <div class="seqn">{index + 1}</div>
 
-                    <button  class="seqb"  on:click={() => moveDown(index)}>-</button>
-                  
+                        <button class="seqb" on:click={() => moveDown(index)}
+                            >-</button
+                        >
+                    </div>
                 </div>
-            </div>
-        {/each}
-    </div>
-    <button class="pbutton" on:click={processFile}> Process </button>
+            {/each}
+        </div>
+        <button class="pbutton" on:click={processFile}> Process </button>
+    {/if}
 </div>
 
 <style>
@@ -148,6 +179,19 @@
         height: 30px;
         cursor: pointer;
     }
+    .processing {
+        color: #ddff00;
+        font-size: 24pt;
+        font-weight: bolder;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+    }
     .upload {
         height: 10vh;
         justify-content: center;
@@ -180,7 +224,7 @@
         font-size: 12pt;
         width: 70%;
         height: 60vh;
-        justify-content: flex-start; 
+        justify-content: flex-start;
         align-items: flex-start;
         display: flex;
         border: #00ff3c 3px solid;
