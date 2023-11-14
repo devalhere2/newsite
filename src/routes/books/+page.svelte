@@ -1,4 +1,17 @@
 <script>
+    let query = "";
+
+    async function searchb() {
+        const response = await fetch(
+            `http://127.0.0.1:8000/getbooks`
+        );
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+        } else {
+            console.error("Error:", response.statusText);
+        }
+    }
 </script>
 
 <div class="body">
@@ -11,9 +24,10 @@
                 placeholder="Search..."
                 class="searchbar"
             />
-            <button on:click|preventDefault = {()=> {}}  class ="searchbutton">Search</button>
+            <button on:click|preventDefault={searchb} class="searchbutton"
+                >Search</button
+            >
             <a href="/upload"><button class="uploadbutton">Upload</button></a>
-            
         </form>
     </div>
     <div class="bookbody">
@@ -69,7 +83,6 @@
     <div class="pages">
         <div><button class="bn">← Back</button></div>
         <div><button class="bn">Next →</button></div>
-        
     </div>
 </div>
 
@@ -80,12 +93,12 @@
         border: none;
         height: 30px;
         border-radius: 20px;
-        color: aqua;  
+        color: aqua;
         padding: 12px 20px;
     }
-    .bn{
+    .bn {
         margin-left: 2vw;
-        margin-right: 2vw; 
+        margin-right: 2vw;
         height: 30px;
         background-color: black;
         border: 3px solid rgb(255, 255, 0);
@@ -95,9 +108,8 @@
         font-weight: bold;
         font-size: 10pt;
         cursor: pointer;
-
     }
-    .searchbutton{
+    .searchbutton {
         height: 30px;
         background-color: black;
         border: 3px solid aqua;
@@ -108,7 +120,7 @@
         font-size: 10pt;
         cursor: pointer;
     }
-    .uploadbutton{
+    .uploadbutton {
         height: 30px;
         background-color: black;
         border: 3px solid rgb(47, 255, 0);
@@ -123,7 +135,6 @@
         color: white;
         opacity: 1; /* Firefox */
         font-weight: bold;
-
     }
 
     ::-ms-input-placeholder {
@@ -131,7 +142,6 @@
         color: white;
         font-weight: bold;
         padding-left: 10px;
-
     }
     .search {
         margin-top: 20px;
