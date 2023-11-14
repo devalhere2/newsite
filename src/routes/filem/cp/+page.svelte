@@ -22,12 +22,21 @@
      * @param {any} event
      */
     async function handleFileChange(event) {
-        selectedFiles = [...event.target.files].filter(
-            (file) => file.type === "application/pdf" && file.size <= 20000000
-        );
-        filenames_list = selectedFiles.map((file) => file.name);
-        event.target.value = null;
-    }
+    selectedFiles = [...event.target.files].filter(
+        (file) => {
+            if (file.type === "application/pdf") {
+                if (file.size > 10000000) {
+                    alert("Please select a PDF file less than 10MB");
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+    );
+    filenames_list = selectedFiles.map((file) => file.name);
+    event.target.value = null;
+}
     function moveUp(index) {
         if (index > 0) {
             [selectedFiles[index - 1], selectedFiles[index]] = [
