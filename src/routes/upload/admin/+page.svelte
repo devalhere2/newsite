@@ -1,34 +1,50 @@
-<script>
-    let username = '';
-    let password = '';
-    let selectedFile;
-
-    function handleFileChange(event) {
-        selectedFile = event.target.files[0];
-    }
-
-    function handleSubmit() {
-        // Handle form submission here
+<script lang="ts">
+    import { page } from "$app/stores";
+    // $:console.log($page);
+    $: verifystatus = "";
+    $: showupload = 'no';
+    $: if ($page.form) {
+        verifystatus = $page.form.user;
+        if (verifystatus.length > 0 && verifystatus == "e") {
+            showupload = 'yes';
+        } 
+        else if (verifystatus.length > 0 && verifystatus == "ne"){
+            showupload = 'no';
+        }
+        else {
+            showupload = 'no';
+        }
     }
 </script>
 
 <div class="body">
-    <form class="body" on:submit|preventDefault={handleSubmit}>
-        <label for="username">Username:</label>
-        <input id="username" bind:value={username} type="text" required>
-        <br>
-        <label for="password">Password:</label>
-        <input id="password" bind:value={password} type="password" required>
-<br>
-        <label for="file">Upload PDF:</label>
-        <input id="file" type="file" accept="application/pdf" on:change={handleFileChange} required>
-<br>
-        <button type="submit">Submit</button>
+    {#if showupload == 'no'}
+    <form
+        method="POST"
+        class="body"
+        enctype="multipart/form-data"
+    
+    >
+        <label>
+            Username:
+            <input name="username" type="text" />
+        </label>
+        <label>
+            Password
+            <input name="password" type="password" />
+        </label>
+        <br />
+        
+
+           <button type="submit">Submit</button>
     </form>
+    {:else}
+    <div></div>
+    {/if}
 </div>
 
 <style>
-    .body{
+    .body {
         display: flex;
         flex-direction: column;
         height: 100%;
