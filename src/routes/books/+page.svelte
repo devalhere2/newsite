@@ -1,17 +1,37 @@
 <script>
-    let query = "";
+    import { onMount } from "svelte";
 
+    /**
+     * @type {{ "": any; }[]}
+     */
+    let books = { data: [] };
+    $: start = 0;
+    function handleNextClick() {
+        if (books.data.length < 4) {
+            return;
+        }
+        start += 4;
+        searchb();
+    }
+    function handleBackClick() {
+        if (start > 0) {
+            start -= 4;
+
+            searchb();
+        }
+    }
     async function searchb() {
         const response = await fetch(
-            `http://127.0.0.1:8000/getbooks`
+            `http://127.0.0.1:8000/get_books?start=${start}`
         );
         if (response.ok) {
-            const data = await response.json();
-            console.log(data);
+            books = await response.json();
+            console.log(books);
         } else {
             console.error("Error:", response.statusText);
         }
     }
+    onMount(searchb);
 </script>
 
 <div class="body">
@@ -31,62 +51,85 @@
         </form>
     </div>
     <div class="bookbody">
-        <div class="container">
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
+        {#each books.data as book (book.pdf_file_name)}
+            <div class="box">
+                <a href={`books/${book.pdf_file_name}`} class="booklinks">
+                    <div class="image">
+                        <img
+                            src={`data:image/png;base64,${book.image}`}
+                            alt={book.pdf_file_name}
+                        />
+                    </div>
+
+                    <div class="title">
+                        <h2>{book.pdf_file_name}</h2>
+                    </div>
+                </a>
             </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image"><h1>image</h1></div>
-                <div class="title"><p>Title</p></div>
-            </div>
-            <div class="item">
-                <div class="image">
-                    <img src="marsf.png" alt="" width="80%" />
-                </div>
-                <div class="title"><p>Title</p></div>
-            </div>
-        </div>
+        {/each}
     </div>
     <div class="pages">
-        <div><button class="bn">← Back</button></div>
-        <div><button class="bn">Next →</button></div>
+        <div><button class="bn" on:click={handleBackClick}>← Back</button></div>
+        <div><button class="bn" on:click={handleNextClick}>Next →</button></div>
     </div>
 </div>
 
 <style>
+    .bookbody {
+        flex: 1;
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .booklinks {
+        
+        text-decoration: none; 
+        display: flex; 
+        flex-direction: column;
+        width: 100%;
+        flex: 1;
+    }
+    .box {
+        width: 22%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 10px; /* Add some margin between the boxes */
+        border: 3px solid rgb(147, 71, 235);
+        border-radius: 10px;
+    }
+
+    .image {
+        flex-grow: 1;
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+        padding: 10px 10px;
+    }
+
+    .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .title {
+        margin-top: auto;
+        padding: 0.6em 0; /* Adjust based on your needs */
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: black; /* Set a contrasting color for your text */
+        font-size: 16px; /* Increase the font size */
+        display: block;
+        /* background-color: red; */
+    }
+
+    h2 {
+        padding: 0 10px;
+        margin: 0;
+        color: wheat;
+    }
     .searchbar {
         width: 30vw;
         background-color: black;
@@ -155,41 +198,10 @@
         align-items: center;
         background-color: rgba(55, 55, 55, 0.4);
     }
-    .container {
-        display: grid;
-        grid-template-rows: 30vh 30vh;
-        grid-template-columns: 14vw 14vw 14vw 14vw 14vw 14vw;
-        grid-gap: 24px;
-    }
 
-    .item {
-        border: 3.5px solid #aa00ff;
-        border-radius: 10px;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-        color: blue;
-        display: flex;
-        flex-direction: column;
-    }
-    h1 {
-        color: wheat;
-    }
     .pages {
         display: flex;
         margin-top: 2vw;
-    }
-    .image {
-        border: 2px solid red;
-        height: 100%;
-        margin-top: 1vw;
-        margin-left: 1vw;
-        margin-right: 1vw;
-
-        display: flex;
-        flex-direction: column;
-
-        justify-content: center;
-        align-items: center;
+        margin-bottom: 2vw;
     }
 </style>
