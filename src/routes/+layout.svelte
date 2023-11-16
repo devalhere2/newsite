@@ -2,7 +2,9 @@
     import Navbar from "../components/Navbar.svelte";
     import Footer from "../components/Footer.svelte";
 </script>
-
+<svelte:head>
+<title>deval.me</title>
+</svelte:head>
 <div class="mainbody">
     <div class="nav"><Navbar /></div>
     <div class="body" ><slot /></div>

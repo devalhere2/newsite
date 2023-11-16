@@ -1,4 +1,5 @@
 <script>
+// @ts-nocheck
     import { onMount } from "svelte";
 
     /**
@@ -26,7 +27,7 @@
         );
         if (response.ok) {
             books = await response.json();
-            console.log(books);
+         
         } else {
             console.error("Error:", response.statusText);
         }
